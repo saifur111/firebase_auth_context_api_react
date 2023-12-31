@@ -11,18 +11,14 @@ import {
     signInWithPopup,
     signOut,
 } from "firebase/auth";
-import { initalState, reducer } from './authReducer';
+import { initalState,authReducer } from './authReducer';
 
 export const AuthContext = createContext();
 const UserContext = ({ children }) => {
-    const [user, setUser] = useState(null);
-
-    const [state, dispatch] = useReducer(reducer, initalState);
-
+    const [state, dispatch] = useReducer(authReducer, initalState);
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
-    const currentuser = auth.currentUser;
 
     const createUser = async (email, password, displayName) => {
         try {
@@ -48,7 +44,6 @@ const UserContext = ({ children }) => {
             dispatch({ type: type.AUTH_ERROR, payload: msg });
         }
     };
-
     const signInWithGoogle = () => {
         return signInWithPopup(auth, googleProvider);
     };
@@ -68,18 +63,18 @@ const UserContext = ({ children }) => {
 
     useEffect(() =>{
         const unsubscribe = onAuthStateChanged(auth, currentUser =>{
-            setUser(currentUser);
+            dispatch({ type: type.SET_USER , payload: currentUser });
             console.log('Auth state Changed', currentUser);
         })
         return () =>{
             unsubscribe();
         }
     }, [])
-
-    const authInfo = { user,  cleanUp_UI, createUser, signIn, logOut, signInWithGoogle, signInWithGithub,state}
+    const user =state.currentUser;
+    const authInfo = { cleanUp_UI, createUser, signIn, logOut, signInWithGoogle, signInWithGithub,user}
     return (
         <AuthContext.Provider value={authInfo}>
-            {children}
+            {!state.loading && children}
         </AuthContext.Provider>
     );
 };

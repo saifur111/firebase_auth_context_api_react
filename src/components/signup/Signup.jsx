@@ -60,7 +60,6 @@ const Signup = () => {
         console.log('error', error.message);
       })
   }
-  if (state.loading) return <div>Loading ...</div>
   return (
     <div>
       <main className="main-holder">

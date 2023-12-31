@@ -20,9 +20,6 @@ const Home = () => {
         <li>
           {user.email}
         </li>
-        <li>
-          {user.photoURL}
-        </li>
       </ul>
     </div>
   )

@@ -15,7 +15,6 @@ const Header = () => {
       &nbsp; Jobs | &nbsp;
       </Link>
       {user?.email && <span>Welcome, {user.email}</span>}
-      {user?.email && <span>User Id : , {user.uid}</span>}
       {user?.email ? (
         <button onClick={logOut} className="button">
           Log Out

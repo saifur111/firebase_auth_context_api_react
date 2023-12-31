@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useUserContext } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const {signIn,cleanUp_UI, state} = useUserContext();
+    const {signIn,cleanUp_UI} = useUserContext();
     const navigate = useNavigate();
     useEffect(() => void cleanUp_UI(), []);
     const handleSubmit = event =>{
@@ -24,7 +24,6 @@ const Login = () => {
           console.error(error);
         })
     }
-    if (state.loading) return <div>Loading ...</div>
   return (
     <div>
       <main className="main-holder">

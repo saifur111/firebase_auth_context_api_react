@@ -1,14 +1,17 @@
 import * as type from "./authType";
 
 export const initalState = {
+    currentUser: null,
     loading: false,
     errorMsg: null
 };
 
-export const reducer = (state, action) => {
+export const authReducer = (state, action) => {
     switch (action.type) {
         case type.AUTH_TRY:
             return { ...state, loading: true };
+        case type.SET_USER:
+            return { ...state, loading: false,currentUser:action.payload };
         case type.AUTH_SUCCESS:
             return { ...state, loading: false };
         case type.AUTH_ERROR:
